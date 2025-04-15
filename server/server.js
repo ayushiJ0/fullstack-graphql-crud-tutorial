@@ -7,17 +7,36 @@ const users = [
   { id: "3", name: "Alice Johnson", age: 28, isMarried: false },
 ];
 
+const customers = [
+  { id: "1", name: "Harry Potter", age: 14, isMarried: true },
+  { id: "2", name: "albus", age: 25, isMarried: false },
+  { id: "3", name: "Ron Weasley", age: 28, isMarried: false },
+];
+
 const typeDefs = `
     type Query {
       getUsers: [User]
       getUserById(id: ID!): User
+      getCustomers:[Customer]
+      getCustomerById(id: ID!): Customer
     }
 
     type Mutation {
       createUser(name: String!, age: Int!, isMarried: Boolean!): User
     }
 
+    type Mutation {
+      createCustomer(name: String!, age: Int!, isMarried: Boolean!): User
+    }
+
     type User {
+      id: ID
+      name: String
+      age: Int
+      isMarried: Boolean
+    }
+
+    type Customer {
       id: ID
       name: String
       age: Int
@@ -34,6 +53,13 @@ const resolvers = {
       const id = args.id;
       return users.find((user) => user.id === id);
     },
+    getCustomers: () => {
+      return customers;
+    },
+    getCustomerById: (parent, args) => {
+      const id = args.id;
+      return customers.find((customer) => customer.id === id);
+    },
   },
   Mutation: {
     createUser: (parent, args) => {
@@ -46,6 +72,17 @@ const resolvers = {
       };
       console.log(newUser);
       users.push(newUser);
+    },
+    createCustomer: (parent, args) => {
+      const { name, age, isMarried } = args;
+      const newCustomer = {
+        id: (customers.length + 1).toString(),
+        name,
+        age,
+        isMarried,
+      };
+      console.log(newCustomer);
+      customers.push(newCustomer);
     },
   },
 };
