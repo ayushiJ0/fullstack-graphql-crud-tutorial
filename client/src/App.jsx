@@ -187,7 +187,7 @@ function App() {
             <p> Loading Customer...</p>
           ) : (
             <>
-              <h1> Chosen Customer: </h1>
+              <h1> Chosen Customer : </h1>
               <p>{getUserByIdData.getUserById.name}</p>
               <p>{getUserByIdData.getUserById.age}</p>
             </>
